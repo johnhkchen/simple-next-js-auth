@@ -1,0 +1,1013 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Real Estate Platform - Directus Schema",
+  "description": "Database schema for Directus CMS",
+  "collections": [
+    {
+      "collection": "properties",
+      "note": "Property listings",
+      "archive_field": "status",
+      "archive_value": "archived",
+      "sort_field": "created_at",
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true
+          },
+          "schema": {
+            "is_primary_key": true,
+            "has_auto_increment": false
+          }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Draft", "value": "draft" },
+                { "text": "Published", "value": "published" },
+                { "text": "Archived", "value": "archived" }
+              ]
+            },
+            "default": "draft",
+            "width": "half"
+          },
+          "schema": {
+            "default_value": "draft"
+          }
+        },
+        {
+          "field": "created_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true,
+            "width": "half"
+          },
+          "schema": {
+            "default_value": "now()"
+          }
+        },
+        {
+          "field": "updated_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true,
+            "width": "half"
+          },
+          "schema": {
+            "default_value": "now()"
+          }
+        },
+        {
+          "field": "published_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "width": "half"
+          }
+        },
+        {
+          "field": "title",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "full"
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "field": "slug",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "note": "URL-friendly identifier",
+            "width": "half"
+          },
+          "schema": {
+            "is_nullable": false,
+            "is_unique": true
+          }
+        },
+        {
+          "field": "description",
+          "type": "text",
+          "meta": {
+            "interface": "input-rich-text-md",
+            "width": "full"
+          }
+        },
+        {
+          "field": "price",
+          "type": "decimal",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          },
+          "schema": {
+            "is_nullable": false,
+            "numeric_precision": 12,
+            "numeric_scale": 2
+          }
+        },
+        {
+          "field": "price_display",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "note": "Formatted price display (e.g., $1,850,000)",
+            "width": "half"
+          }
+        },
+        {
+          "field": "address",
+          "type": "json",
+          "meta": {
+            "interface": "input-code",
+            "note": "JSON object with street, city, state, zipCode, country"
+          }
+        },
+        {
+          "field": "location",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "note": "Short location (e.g., San Francisco, CA)",
+            "width": "half"
+          }
+        },
+        {
+          "field": "coordinates",
+          "type": "json",
+          "meta": {
+            "interface": "input-code",
+            "note": "JSON object with lat, lng"
+          }
+        },
+        {
+          "field": "property_type",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Residential", "value": "residential" },
+                { "text": "Commercial", "value": "commercial" },
+                { "text": "Land", "value": "land" },
+                { "text": "Multi-Family", "value": "multi-family" }
+              ]
+            },
+            "default": "residential",
+            "width": "half"
+          },
+          "schema": {
+            "default_value": "residential"
+          }
+        },
+        {
+          "field": "listing_type",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Sale", "value": "sale" },
+                { "text": "Rent", "value": "rent" },
+                { "text": "Lease", "value": "lease" }
+              ]
+            },
+            "default": "sale",
+            "width": "half"
+          },
+          "schema": {
+            "default_value": "sale"
+          }
+        },
+        {
+          "field": "bedrooms",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "field": "bathrooms",
+          "type": "decimal",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          },
+          "schema": {
+            "is_nullable": false,
+            "numeric_precision": 3,
+            "numeric_scale": 1
+          }
+        },
+        {
+          "field": "sqft",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          },
+          "schema": {
+            "is_nullable": false
+          }
+        },
+        {
+          "field": "lot_size",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "year_built",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "features",
+          "type": "json",
+          "meta": {
+            "interface": "tags",
+            "note": "Array of feature strings"
+          }
+        },
+        {
+          "field": "amenities",
+          "type": "json",
+          "meta": {
+            "interface": "tags",
+            "note": "Array of amenity strings"
+          }
+        },
+        {
+          "field": "main_image",
+          "type": "uuid",
+          "meta": {
+            "interface": "file-image",
+            "width": "full"
+          },
+          "schema": {
+            "foreign_key_table": "directus_files"
+          }
+        },
+        {
+          "field": "images",
+          "type": "alias",
+          "meta": {
+            "interface": "files",
+            "special": ["files"]
+          }
+        },
+        {
+          "field": "virtual_tour_url",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "video_url",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "neighborhood",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "school_district",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "hoa_fees",
+          "type": "decimal",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          },
+          "schema": {
+            "numeric_precision": 8,
+            "numeric_scale": 2
+          }
+        },
+        {
+          "field": "parking_spaces",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "pet_policy",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Allowed", "value": "allowed" },
+                { "text": "Not Allowed", "value": "not-allowed" },
+                { "text": "Case by Case", "value": "case-by-case" }
+              ]
+            },
+            "width": "half"
+          }
+        },
+        {
+          "field": "seo_title",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "full"
+          }
+        },
+        {
+          "field": "seo_description",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline",
+            "width": "full"
+          }
+        },
+        {
+          "field": "agent_id",
+          "type": "uuid",
+          "meta": {
+            "interface": "select-dropdown-m2o",
+            "width": "half"
+          },
+          "schema": {
+            "foreign_key_table": "agents"
+          }
+        },
+        {
+          "field": "tags",
+          "type": "json",
+          "meta": {
+            "interface": "tags"
+          }
+        },
+        {
+          "field": "views",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "width": "half"
+          },
+          "schema": {
+            "default_value": 0
+          }
+        },
+        {
+          "field": "inquiries",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "width": "half"
+          },
+          "schema": {
+            "default_value": 0
+          }
+        }
+      ]
+    },
+    {
+      "collection": "agents",
+      "note": "Real estate agents",
+      "archive_field": "status",
+      "archive_value": "archived",
+      "sort_field": "last_name",
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true
+          },
+          "schema": {
+            "is_primary_key": true
+          }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Draft", "value": "draft" },
+                { "text": "Published", "value": "published" },
+                { "text": "Archived", "value": "archived" }
+              ]
+            },
+            "default": "published",
+            "width": "half"
+          }
+        },
+        {
+          "field": "created_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true
+          }
+        },
+        {
+          "field": "updated_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true
+          }
+        },
+        {
+          "field": "first_name",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          }
+        },
+        {
+          "field": "last_name",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          }
+        },
+        {
+          "field": "full_name",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "full"
+          }
+        },
+        {
+          "field": "email",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true,
+            "width": "half"
+          },
+          "schema": {
+            "is_unique": true
+          }
+        },
+        {
+          "field": "phone",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "title",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "bio",
+          "type": "text",
+          "meta": {
+            "interface": "input-rich-text-md",
+            "width": "full"
+          }
+        },
+        {
+          "field": "license_number",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "specializations",
+          "type": "json",
+          "meta": {
+            "interface": "tags"
+          }
+        },
+        {
+          "field": "languages",
+          "type": "json",
+          "meta": {
+            "interface": "tags"
+          }
+        },
+        {
+          "field": "profile_image",
+          "type": "uuid",
+          "meta": {
+            "interface": "file-image"
+          },
+          "schema": {
+            "foreign_key_table": "directus_files"
+          }
+        },
+        {
+          "field": "social",
+          "type": "json",
+          "meta": {
+            "interface": "input-code"
+          }
+        },
+        {
+          "field": "properties_sold",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "years_experience",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          }
+        },
+        {
+          "field": "rating",
+          "type": "decimal",
+          "meta": {
+            "interface": "input",
+            "width": "half"
+          },
+          "schema": {
+            "numeric_precision": 2,
+            "numeric_scale": 1
+          }
+        },
+        {
+          "field": "seo_title",
+          "type": "string",
+          "meta": {
+            "interface": "input"
+          }
+        },
+        {
+          "field": "seo_description",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline"
+          }
+        }
+      ]
+    },
+    {
+      "collection": "inquiries",
+      "note": "Customer inquiries and contact requests",
+      "sort_field": "created_at",
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true
+          },
+          "schema": {
+            "is_primary_key": true
+          }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "New", "value": "draft" },
+                { "text": "In Progress", "value": "published" },
+                { "text": "Resolved", "value": "archived" }
+              ]
+            },
+            "default": "draft"
+          }
+        },
+        {
+          "field": "created_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true
+          }
+        },
+        {
+          "field": "name",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true
+          }
+        },
+        {
+          "field": "email",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true
+          }
+        },
+        {
+          "field": "phone",
+          "type": "string",
+          "meta": {
+            "interface": "input"
+          }
+        },
+        {
+          "field": "inquiry_type",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Property Viewing", "value": "property-viewing" },
+                { "text": "General Info", "value": "general-info" },
+                { "text": "Agent Contact", "value": "agent-contact" },
+                { "text": "Other", "value": "other" }
+              ]
+            }
+          }
+        },
+        {
+          "field": "subject",
+          "type": "string",
+          "meta": {
+            "interface": "input"
+          }
+        },
+        {
+          "field": "message",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline",
+            "required": true
+          }
+        },
+        {
+          "field": "property_id",
+          "type": "uuid",
+          "meta": {
+            "interface": "select-dropdown-m2o"
+          },
+          "schema": {
+            "foreign_key_table": "properties"
+          }
+        },
+        {
+          "field": "agent_id",
+          "type": "uuid",
+          "meta": {
+            "interface": "select-dropdown-m2o"
+          },
+          "schema": {
+            "foreign_key_table": "agents"
+          }
+        },
+        {
+          "field": "resolved",
+          "type": "boolean",
+          "meta": {
+            "interface": "boolean",
+            "width": "half"
+          },
+          "schema": {
+            "default_value": false
+          }
+        },
+        {
+          "field": "resolved_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime"
+          }
+        },
+        {
+          "field": "response",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline"
+          }
+        }
+      ]
+    },
+    {
+      "collection": "articles",
+      "note": "Blog articles and content",
+      "archive_field": "status",
+      "archive_value": "archived",
+      "sort_field": "published_at",
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true
+          },
+          "schema": {
+            "is_primary_key": true
+          }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Draft", "value": "draft" },
+                { "text": "Published", "value": "published" },
+                { "text": "Archived", "value": "archived" }
+              ]
+            },
+            "default": "draft"
+          }
+        },
+        {
+          "field": "created_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true
+          }
+        },
+        {
+          "field": "updated_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true
+          }
+        },
+        {
+          "field": "published_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime"
+          }
+        },
+        {
+          "field": "title",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true
+          }
+        },
+        {
+          "field": "slug",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true
+          },
+          "schema": {
+            "is_unique": true
+          }
+        },
+        {
+          "field": "excerpt",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline"
+          }
+        },
+        {
+          "field": "content",
+          "type": "text",
+          "meta": {
+            "interface": "input-rich-text-md",
+            "required": true
+          }
+        },
+        {
+          "field": "featured_image",
+          "type": "uuid",
+          "meta": {
+            "interface": "file-image"
+          },
+          "schema": {
+            "foreign_key_table": "directus_files"
+          }
+        },
+        {
+          "field": "category",
+          "type": "string",
+          "meta": {
+            "interface": "input"
+          }
+        },
+        {
+          "field": "tags",
+          "type": "json",
+          "meta": {
+            "interface": "tags"
+          }
+        },
+        {
+          "field": "author_id",
+          "type": "uuid",
+          "meta": {
+            "interface": "select-dropdown-m2o"
+          },
+          "schema": {
+            "foreign_key_table": "agents"
+          }
+        },
+        {
+          "field": "views",
+          "type": "integer",
+          "meta": {
+            "interface": "input",
+            "readonly": true
+          },
+          "schema": {
+            "default_value": 0
+          }
+        },
+        {
+          "field": "seo_title",
+          "type": "string",
+          "meta": {
+            "interface": "input"
+          }
+        },
+        {
+          "field": "seo_description",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline"
+          }
+        }
+      ]
+    },
+    {
+      "collection": "testimonials",
+      "note": "Client testimonials and reviews",
+      "archive_field": "status",
+      "archive_value": "archived",
+      "sort_field": "created_at",
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": {
+            "interface": "input",
+            "readonly": true,
+            "hidden": true
+          },
+          "schema": {
+            "is_primary_key": true
+          }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": {
+            "interface": "select-dropdown",
+            "options": {
+              "choices": [
+                { "text": "Draft", "value": "draft" },
+                { "text": "Published", "value": "published" },
+                { "text": "Archived", "value": "archived" }
+              ]
+            },
+            "default": "draft"
+          }
+        },
+        {
+          "field": "created_at",
+          "type": "timestamp",
+          "meta": {
+            "interface": "datetime",
+            "readonly": true
+          }
+        },
+        {
+          "field": "client_name",
+          "type": "string",
+          "meta": {
+            "interface": "input",
+            "required": true
+          }
+        },
+        {
+          "field": "client_title",
+          "type": "string",
+          "meta": {
+            "interface": "input"
+          }
+        },
+        {
+          "field": "quote",
+          "type": "text",
+          "meta": {
+            "interface": "input-multiline",
+            "required": true
+          }
+        },
+        {
+          "field": "rating",
+          "type": "integer",
+          "meta": {
+            "interface": "slider",
+            "options": {
+              "min": 1,
+              "max": 5,
+              "step": 1
+            }
+          }
+        },
+        {
+          "field": "featured",
+          "type": "boolean",
+          "meta": {
+            "interface": "boolean"
+          },
+          "schema": {
+            "default_value": false
+          }
+        },
+        {
+          "field": "property_id",
+          "type": "uuid",
+          "meta": {
+            "interface": "select-dropdown-m2o"
+          },
+          "schema": {
+            "foreign_key_table": "properties"
+          }
+        },
+        {
+          "field": "agent_id",
+          "type": "uuid",
+          "meta": {
+            "interface": "select-dropdown-m2o"
+          },
+          "schema": {
+            "foreign_key_table": "agents"
+          }
+        }
+      ]
+    }
+  ]
+}

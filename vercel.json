@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npx turbo run build --filter=real-estate-platform",
+  "devCommand": "npx turbo run dev --filter=real-estate-platform",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": "apps/real-estate-platform/.next",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./apps/real-estate-platform"
+}
