@@ -5,16 +5,17 @@ const nextConfig = {
       bodySizeLimit: '2mb',
     },
   },
-  // Disable static optimization for admin routes since they use Refine
-  // which requires dynamic rendering with useSearchParams
+  // Disable static page generation during build for admin routes
+  // This is required for Refine which uses useSearchParams
+  output: 'standalone',
   async headers() {
     return [
       {
         source: '/admin/:path*',
         headers: [
           {
-            key: 'x-middleware-cache',
-            value: 'no-cache',
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
           },
         ],
       },

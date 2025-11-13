@@ -1,6 +1,7 @@
 "use client"
 
 import { Refine, AuthProvider } from "@refinedev/core"
+import { Suspense } from "react"
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar"
 import routerProvider from "@refinedev/nextjs-router"
 import { dataProvider, liveProvider } from "@refinedev/supabase"
@@ -89,71 +90,73 @@ export default function AdminLayout({
         }}
       >
         <AntdApp>
-          <RefineKbarProvider>
-            <Refine
-              routerProvider={routerProvider}
-              dataProvider={dataProvider(supabaseClient)}
-              liveProvider={liveProvider(supabaseClient)}
-              authProvider={authProvider}
-              resources={[
-                {
-                  name: "dashboard",
-                  list: "/admin",
-                  meta: {
-                    label: "Dashboard",
-                    icon: <DashboardOutlined />,
+          <Suspense fallback={<div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh'}}>Loading...</div>}>
+            <RefineKbarProvider>
+              <Refine
+                routerProvider={routerProvider}
+                dataProvider={dataProvider(supabaseClient)}
+                liveProvider={liveProvider(supabaseClient)}
+                authProvider={authProvider}
+                resources={[
+                  {
+                    name: "dashboard",
+                    list: "/admin",
+                    meta: {
+                      label: "Dashboard",
+                      icon: <DashboardOutlined />,
+                    },
                   },
-                },
-                {
-                  name: "properties",
-                  list: "/admin/properties",
-                  create: "/admin/properties/create",
-                  edit: "/admin/properties/edit/:id",
-                  show: "/admin/properties/show/:id",
-                  meta: {
-                    label: "Properties",
-                    icon: <HomeOutlined />,
+                  {
+                    name: "properties",
+                    list: "/admin/properties",
+                    create: "/admin/properties/create",
+                    edit: "/admin/properties/edit/:id",
+                    show: "/admin/properties/show/:id",
+                    meta: {
+                      label: "Properties",
+                      icon: <HomeOutlined />,
+                    },
                   },
-                },
-                {
-                  name: "inquiries",
-                  list: "/admin/inquiries",
-                  edit: "/admin/inquiries/edit/:id",
-                  show: "/admin/inquiries/show/:id",
-                  meta: {
-                    label: "Inquiries",
-                    icon: <MessageOutlined />,
+                  {
+                    name: "inquiries",
+                    list: "/admin/inquiries",
+                    edit: "/admin/inquiries/edit/:id",
+                    show: "/admin/inquiries/show/:id",
+                    meta: {
+                      label: "Inquiries",
+                      icon: <MessageOutlined />,
+                    },
                   },
-                },
-                {
-                  name: "analytics",
-                  list: "/admin/analytics",
-                  meta: {
-                    label: "Analytics",
-                    icon: <LineChartOutlined />,
+                  {
+                    name: "analytics",
+                    list: "/admin/analytics",
+                    meta: {
+                      label: "Analytics",
+                      icon: <LineChartOutlined />,
+                    },
                   },
-                },
-                {
-                  name: "settings",
-                  list: "/admin/settings",
-                  meta: {
-                    label: "Settings",
-                    icon: <SettingOutlined />,
+                  {
+                    name: "settings",
+                    list: "/admin/settings",
+                    meta: {
+                      label: "Settings",
+                      icon: <SettingOutlined />,
+                    },
                   },
-                },
-              ]}
-              options={{
-                syncWithLocation: true,
-                warnWhenUnsavedChanges: true,
-                projectId: "real-estate-platform",
-              }}
-            >
-              <ThemedLayout>
-                {children}
-              </ThemedLayout>
-              <RefineKbar />
-            </Refine>
-          </RefineKbarProvider>
+                ]}
+                options={{
+                  syncWithLocation: true,
+                  warnWhenUnsavedChanges: true,
+                  projectId: "real-estate-platform",
+                }}
+              >
+                <ThemedLayout>
+                  {children}
+                </ThemedLayout>
+                <RefineKbar />
+              </Refine>
+            </RefineKbarProvider>
+          </Suspense>
         </AntdApp>
       </ConfigProvider>
     </AntdRegistry>
