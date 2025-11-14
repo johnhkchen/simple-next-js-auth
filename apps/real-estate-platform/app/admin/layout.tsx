@@ -18,6 +18,7 @@ import {
   FileTextOutlined
 } from "@ant-design/icons"
 import { createClient } from "@/lib/supabase/client"
+import { DemoBanner } from "@/components/demo-banner"
 
 const authProvider: AuthProvider = {
   login: async ({ email, password }) => {
@@ -151,6 +152,7 @@ export default function AdminLayout({
                 }}
               >
                 <ThemedLayout>
+                  <DemoBanner />
                   {children}
                 </ThemedLayout>
                 <RefineKbar />

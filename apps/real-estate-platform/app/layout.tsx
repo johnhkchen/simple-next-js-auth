@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Spectral } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
+import { DemoBanner } from "@/components/demo-banner"
 
 const spectral = Spectral({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={spectral.variable}>
       <body className={`${spectral.className} antialiased`}>
+        <DemoBanner />
         {children}
         <Analytics />
       </body>
