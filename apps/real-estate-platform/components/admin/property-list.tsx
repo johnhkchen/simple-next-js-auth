@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Eye, Trash2 } from "lucide-react"
+import { Edit, Eye, Trash2, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 const properties = [
   { id: 1, title: "Modern Loft in SOMA", status: "Active", price: "$1,850,000", views: 234 },
@@ -19,8 +20,14 @@ interface PropertyListProps {
 export function PropertyList({ onViewProperty, onEditProperty }: PropertyListProps) {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>Property Listings</CardTitle>
+        <Link href="/admin/properties">
+          <Button variant="ghost" size="sm" className="gap-1">
+            View All
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </Link>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

@@ -1,5 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 const activities = [
   { id: 1, user: "Sarah Chen", action: "scheduled a viewing", property: "Modern Loft in SOMA", time: "2 hours ago" },
@@ -12,8 +15,14 @@ const activities = [
 export function RecentActivity() {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>Recent Activity</CardTitle>
+        <Link href="/admin/inquiries">
+          <Button variant="ghost" size="sm" className="gap-1">
+            View All
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </Link>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
