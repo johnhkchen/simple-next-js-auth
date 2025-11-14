@@ -13,7 +13,7 @@ interface PropertyListProps {
 }
 
 export function PropertyList({ onViewProperty, onEditProperty }: PropertyListProps) {
-  const { data, isLoading } = useList({
+  const { query } = useList({
     resource: "properties",
     pagination: {
       pageSize: 5,
@@ -26,7 +26,8 @@ export function PropertyList({ onViewProperty, onEditProperty }: PropertyListPro
     ],
   })
 
-  const properties = data?.data || []
+  const properties = query.data?.data || []
+  const isLoading = query.isLoading
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
