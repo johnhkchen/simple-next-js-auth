@@ -24,19 +24,20 @@ export default function PropertiesListPage() {
     <List>
       <Table {...tableProps} rowKey="id">
         <Table.Column
-          dataIndex="main_image_url"
+          dataIndex="images"
           title="Image"
-          render={(value) =>
-            value ? (
+          render={(images, record: any) => {
+            const imageUrl = images?.[0] || record.main_image_url
+            return imageUrl ? (
               <img
-                src={value}
+                src={imageUrl}
                 alt="Property"
                 style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 4 }}
               />
             ) : (
               <div style={{ width: 80, height: 60, background: "#f0f0f0", borderRadius: 4 }} />
             )
-          }
+          }}
         />
         <Table.Column dataIndex="title" title="Title" />
         <Table.Column dataIndex="location" title="Location" />

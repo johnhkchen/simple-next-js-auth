@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic'
 import { Edit, useForm } from "@refinedev/antd"
 import { Form, Input, InputNumber, Select } from "antd"
 import { useParams } from "next/navigation"
+import { CloudinaryUpload } from "@/components/admin/cloudinary-upload"
 
 const { TextArea } = Input
 
@@ -15,9 +16,21 @@ export default function PropertyEditPage() {
     id: params.id as string
   })
 
+  // Transform form data before submission
+  const handleFinish = (values: any) => {
+    const transformedValues = { ...values }
+
+    // Set main_image_url from first image in array
+    if (transformedValues.images && transformedValues.images.length > 0) {
+      transformedValues.main_image_url = transformedValues.images[0]
+    }
+
+    return formProps.onFinish?.(transformedValues)
+  }
+
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical" onFinish={handleFinish}>
         <Form.Item
           label="Title"
           name="title"
@@ -103,8 +116,12 @@ export default function PropertyEditPage() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Main Image URL" name="main_image_url">
-          <Input placeholder="https://..." />
+        <Form.Item
+          label="Property Images"
+          name="images"
+          help="First image will be set as the main property image"
+        >
+          <CloudinaryUpload maxFiles={10} folder="properties" />
         </Form.Item>
 
         <Form.Item label="Status" name="status">

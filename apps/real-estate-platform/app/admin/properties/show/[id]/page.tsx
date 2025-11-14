@@ -7,6 +7,7 @@ import { Show, TextField, NumberField } from "@refinedev/antd"
 import { useShow } from "@refinedev/core"
 import { Typography, Descriptions, Tag, Space } from "antd"
 import { useParams } from "next/navigation"
+import { ImageGallery } from "@/components/admin/image-gallery"
 
 const { Title } = Typography
 
@@ -20,7 +21,11 @@ export default function PropertyShowPage() {
 
   return (
     <Show isLoading={isLoading}>
-      {record?.main_image_url && (
+      {record?.images && record.images.length > 0 ? (
+        <div style={{ marginBottom: "24px" }}>
+          <ImageGallery images={record.images} alt={record.title} />
+        </div>
+      ) : record?.main_image_url ? (
         <img
           src={record.main_image_url}
           alt={record.title}
@@ -32,7 +37,7 @@ export default function PropertyShowPage() {
             marginBottom: "24px",
           }}
         />
-      )}
+      ) : null}
 
       <Title level={5}>Property Details</Title>
       <Descriptions bordered column={2}>
